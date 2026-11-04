@@ -1,0 +1,17 @@
+id: ingesta_futbol
+namespace: proyecto.futbol
+tasks:
+  - id: ejecutar_ingesta
+    type: io.kestra.plugin.scripts.shell.Commands
+    containerImage: futbol-ingesta:latest
+    pullPolicy: NEVER
+    commands:
+      - python /app/src/ingesta.py
+    retry:
+      type: constant
+      maxAttempt: 3
+      interval: PT30S
+triggers:
+  - id: semanal
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 6 * * 1"

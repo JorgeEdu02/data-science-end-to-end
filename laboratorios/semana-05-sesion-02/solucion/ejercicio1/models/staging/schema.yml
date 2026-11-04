@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: stg_clientes
+    columns:
+      - name: id_cliente
+        tests: [unique, not_null]
+  - name: stg_pedidos
+    columns:
+      - name: id_pedido
+        tests: [unique, not_null]
