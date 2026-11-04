@@ -1,0 +1,28 @@
+# Ejercicio 2: el flow que corre ingesta_clima.py, con el mismo patron del
+# Ejercicio 1. Para subirlo y revisar tu avance:
+#     bash ../subir_a_kestra.sh flow_clima.yml ingesta_clima.py
+#     python3 comprobar.py
+
+# TODO 1: id ingesta_clima, namespace proyecto.clima.
+id: ingesta_clima
+namespace: proyecto.clima
+
+tasks:
+  - id: registrar_clima
+    type: io.kestra.plugin.scripts.shell.Commands
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    retry:
+      type: constant
+      maxAttempt: 4
+      interval: PT5S
+    commands:
+      # TODO 3: pasale a ingesta_clima.py la fecha de la ejecucion como
+      # argumento, en vez de solo imprimirla.
+      - python ingesta_clima.py "{{ trigger.date ?? execution.startDate }}"
+
+triggers:
+  - id: lunes
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 7 * * 1"

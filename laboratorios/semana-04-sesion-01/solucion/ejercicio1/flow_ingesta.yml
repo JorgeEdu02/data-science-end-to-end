@@ -1,0 +1,27 @@
+# Ejercicio 1: el flow que corre ingesta_inestable.py.
+# Este flow ya corre. Subelo y ejecutalo antes de tocar nada:
+#     bash ../subir_a_kestra.sh flow_ingesta.yml ingesta_inestable.py
+
+id: ingesta_diaria
+namespace: proyecto.ingesta
+
+tasks:
+  - id: ejecutar_ingesta
+    type: io.kestra.plugin.scripts.shell.Commands
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    retry:
+      type: constant
+      maxAttempt: 3
+      interval: PT10S
+    commands:
+      # TODO 2: antes del script, deja en el log para que fecha corre esta
+      # ejecucion, sea programada o manual.
+      - echo "Fecha: {{ trigger.date ?? execution.startDate }}"
+      - python ingesta_inestable.py
+
+triggers:
+  - id: diario
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 6 * * *"
