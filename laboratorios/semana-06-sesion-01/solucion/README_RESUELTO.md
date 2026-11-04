@@ -7,7 +7,7 @@ Batch procesa conjuntos acumulados en corridas discretas; streaming procesa even
 En `solucion/ejercicio1_spark.py`, la primera acción que materializa el filtro es `electronica.count()`. `groupBy("categoria").agg(...)` equivale a un `GROUP BY` SQL. Spark escribe una carpeta con archivos `part-*.csv` y `_SUCCESS`, no un solo archivo como pandas. El resultado de hogar `215.23000000000002` es la aproximación de números flotantes binarios, también posible en pandas; redondear para reportar, o usar Decimal para cálculos financieros.
 
 ## Ejercicio 2
-Se filtra `estado=="entregado"` antes de calcular `peso_kg * tarifa_por_kg`; después se agrupa por ciudad. Datos del CSV: 14 envíos, 10 entregados y 4 excluidos. Costos de entregados por ciudad: **Quito 22,75**, **Guayaquil 49**, **Cuenca 26**, total **97,75** en las unidades del dataset. Por lo tanto, Guayaquil tiene el mayor total. Compara con pandas para verificar una muestra pequeña, pero no recopiles a pandas el histórico enorme que no cabe en RAM.
+Se filtra `estado=="entregado"` antes de calcular `peso_kg * tarifa_por_kg`; después se agrupa por ciudad. Datos del CSV: 14 envíos, 10 entregados y 4 excluidos. Costos de entregados por ciudad: **Quito 22,75**, **Guayaquil 48**, **Cuenca 26**, total **96,75** en las unidades del dataset. Por lo tanto, Guayaquil tiene el mayor total. Compara con pandas para verificar una muestra pequeña, pero no recopiles a pandas el histórico enorme que no cabe en RAM.
 
 **Nota:** los totales se calcularon a partir de las filas del CSV del profesor, no de una ejecución Spark verificada en este entorno.
 
